@@ -23,29 +23,41 @@
 ## Setup
 
 ### MySql
-* Create new database schema.  For this project call it 'baseapp'
+* Create new database schema.  For this project call it 'sandbox'
 * Create user table
 ```
-CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `username` varchar(45) NOT NULL, `password` longtext NOT NULL, `role` varchar(45) DEFAULT NULL, `email` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `username_UNIQUE` (`username`)) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;'
+CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `username` varchar(45) NOT NULL, `password` longtext NOT NULL, `role` varchar(45) DEFAULT NULL, `email` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `username_UNIQUE` (`username`)) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 ```
 
 ### Java EE Server - WildFly
 Download and extract WildFly to {wildfly_home}
 
-### Setup server in eclipse
-* Under Servers view
-* Right click - New -> Server
-* WildFly 10.0 (Experimental)
+### Eclipse setup server runtime
+* Go to Window -> Preferences -> Server -> Runtime Environments
+* Select Add...
+* Choose **WildFly 10.0 (Experimental)**
 * Server name: **WildFly 10.0 Sandbox**
 * Create new runtime (next page)
 * Name: **WildFly 10.0 Sandbox**
 * Home Directory: browse to {wildfly_home} location and select
 * Alternate JRE: select jdk1.8.0_77
+
+### Import project from Git repository and configure project
+* Right click on ExsJavaEEFormAuthWebApp -> Build Path -> Configure Build Path...
+* Select Add Library...
+* Select Server Runtime
+* Select **WildFly 10.0 Sandbox**
+
+### Eclipse setup server
+* Window -> Show View -> Servers
+* New -> Server
+* Choose **WildFly 10.0 (Experimental)**
+* Choose runtime server **WildFly 10.0 Sandbox**
 * Start the server
-* Access management console http://127.0.0.1:9990 and you should get a error
-* Follow steps to create user to access admin console
-* If you added a Management user, notice the user/password was added in {wildfly_home}\standalone\configuration\mgmt-users.properties
-* Now you should be able to access the management interface
+* open a command prompt and navigate to {wildfly_home}\bin
+* run add-user.bat to setup a Management user
+* Access management console http://127.0.0.1:9990
+* Notice the user/password was added in {wildfly_home}\standalone\configuration\mgmt-users.properties
 
 ### Configure WildFly
 * Create datasource
@@ -63,14 +75,6 @@ jboss-cli.bat --file=ExsJavaEEFormAuthWebApp\Resources\jboss-add-datasource-modu
 ```
 jboss-cli.bat --file=ExsJavaEEFormAuthWebApp\Resources\jboss-add-security-domain.cli
 ```
-
-### Create Dynamic Web Project or import
-* create
- * Web -> Dynamic Web Project
- * Target runtime - select server runtime that you created earlier
- * Context root: ba
- * Check to generate web.xml
-* import ExsJavaEEFormAuthWebApp
 
 ### In Eclipses servers view
 * Right-click **WildFly 10.0 Sandbox** -> Add and Remove...
