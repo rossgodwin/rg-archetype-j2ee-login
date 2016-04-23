@@ -1,0 +1,13 @@
+connect
+
+module add --name=com.mysql.jdbc --resources=C:\dev\Installs\mysql-connector-java-5.1.38-bin.jar --dependencies=javax.api,javax.transaction.api
+
+reload
+
+/subsystem=datasources/jdbc-driver=mysql.5.1.38:add(driver-name="mysql.5.1.38",driver-module-name="com.mysql.jdbc",driver-class-name=com.mysql.jdbc.Driver)
+
+reload
+
+data-source add --jndi-name=java:/MySqlSandboxDS --name=MySqlSandboxDS --connection-url=jdbc:mysql://127.0.0.1:3306/sandbox --driver-name=mysql.5.1.38 --user-name=root --password=asdfasdf4
+
+reload

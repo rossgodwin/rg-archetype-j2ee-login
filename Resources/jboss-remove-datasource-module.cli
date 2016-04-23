@@ -1,0 +1,13 @@
+connect
+
+#data-source disable --name=MySqlSandboxDS
+
+#/subsystem=datasources/driver=mysql.5.1.38:remove
+
+#/subsystem=datasources/drivers=mysql.5.1.38:remove
+
+#data-source remove --name=MySqlSandboxDS
+
+#module remove --name=com.mysql.jdbc
+
+reload

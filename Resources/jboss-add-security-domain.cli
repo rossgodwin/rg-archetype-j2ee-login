@@ -1,0 +1,22 @@
+connect
+
+/subsystem=security/security-domain=MySqlSandboxSecurityDomain:add(cache-type=default)
+
+reload
+
+/subsystem=security/security-domain=MySqlSandboxSecurityDomain/authentication=classic: \
+	add( \
+		login-modules=[{ \
+			"code"=>"Remoting", \
+			"flag"=>"optional", \
+			"module-options"=>[ \
+				("password-stacking"=>"useFirstPass") \
+				]}, \
+			{ \
+			"code"=>"com.gwn.exs.ba.jboss.auth.LoginModule", \
+			"flag"=>"required", \
+			"module-options"=>[ \
+				("dsJndiName"=>"java:/MySqlSandboxDS") \
+				]}]
+
+reload
