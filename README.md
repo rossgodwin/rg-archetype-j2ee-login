@@ -19,6 +19,7 @@
  * **HibernateUtil** class for SessionFactory singleton
  * User entity and DAO classes
 * Web content includes sign up and login page
+* Example rest service
 
 ## Setup
 
