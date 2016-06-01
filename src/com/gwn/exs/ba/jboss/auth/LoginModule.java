@@ -30,6 +30,7 @@ import org.jboss.security.auth.spi.AbstractServerLoginModule;
 import com.gwn.exs.ba.biz.UserPasswordHelper;
 import com.gwn.exs.ba.common.UserPrincipal;
 import com.gwn.exs.ba.data.hibernate.entity.User;
+import com.gwn.exs.ba.data.shared.UserRole;
 
 public class LoginModule extends AbstractServerLoginModule {
 
@@ -114,7 +115,7 @@ public class LoginModule extends AbstractServerLoginModule {
 			user.setId(((Number)results[0]).longValue());
 			user.setUsername((String)results[1]);
 			user.setPassword((String)results[2]);
-			user.setRole((String)results[3]);
+			user.setRole(UserRole.valueOf((String)results[3]));
 			user.setEmail((String)results[4]);
 		}
 		return user;
@@ -172,7 +173,7 @@ public class LoginModule extends AbstractServerLoginModule {
 		Group rolesGroup = new SimpleGroup("Roles");
 		Group callerPrincipalGroup = new SimpleGroup("CallerPrincipal");
 		Group[] groups = { rolesGroup, callerPrincipalGroup };
-		rolesGroup.addMember(new SimplePrincipal(principal.getRole()));
+		rolesGroup.addMember(new SimplePrincipal(principal.getRole().name()));
 		callerPrincipalGroup.addMember(principal);
 		return groups;
 	}

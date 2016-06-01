@@ -1,17 +1,37 @@
 package com.gwn.exs.ba.data.hibernate.entity;
 
-import com.gwn.exs.ba.data.shared.ILongId;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.gwn.exs.ba.data.shared.ILongId;
+import com.gwn.exs.ba.data.shared.UserConstants;
+import com.gwn.exs.ba.data.shared.UserRole;
+
+@Entity
+@Table(name = "user")
 public class User implements ILongId {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id = -1L;
 	
+	@Column(name = "username", nullable = false, length = UserConstants.MAX_SIZE_EMAIL)
 	private String username;
 	
+	@Column(name = "password", nullable = false)
 	private String password;
 	
-	private String role;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", nullable = false)
+	private UserRole role;
 	
+	@Column(name = "email", nullable = false, length = UserConstants.MAX_SIZE_EMAIL)
 	private String email;
 
 	public Long getId() {
@@ -38,11 +58,11 @@ public class User implements ILongId {
 		this.password = password;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 

@@ -2,17 +2,19 @@ package com.gwn.exs.ba.common;
 
 import java.security.Principal;
 
+import com.gwn.exs.ba.data.shared.UserRole;
+
 public class UserPrincipal implements Principal {
 
 	private Long userId;
 	
 	private String username;
 	
-	private String role;
+	private UserRole role;
 
 	public UserPrincipal() {}
 	
-	public UserPrincipal(Long userId, String username, String role) {
+	public UserPrincipal(Long userId, String username, UserRole role) {
 		this.userId = userId;
 		this.username = username;
 		this.role = role;
@@ -39,11 +41,11 @@ public class UserPrincipal implements Principal {
 		return username;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 }

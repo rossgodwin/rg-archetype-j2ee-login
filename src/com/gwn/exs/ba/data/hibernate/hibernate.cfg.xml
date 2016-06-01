@@ -22,6 +22,7 @@
      
 		<property name="show_sql">false</property>
         
-        <mapping resource="com/gwn/exs/ba/data/hibernate/entity/xml/User.hbm.xml" />
+        <mapping class="com.gwn.exs.ba.data.hibernate.entity.User" />
+        <!--<mapping resource="com/gwn/exs/ba/data/hibernate/entity/xml/User.hbm.xml" />-->
     </session-factory>
 </hibernate-configuration>
