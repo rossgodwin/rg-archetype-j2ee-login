@@ -1,6 +1,8 @@
 
 
-# ExsJavaEEFormAuthWebApp
+# BpJavaeeFormAuthApp
+
+JavaEE web application boilerplate project that has form authentication. 
 
 ## Technologies
 * Eclipse 4.5.2 Mars
@@ -42,7 +44,7 @@ Download and extract WildFly to {wildfly_home}
 * Runtime JRE -> Alternate JRE: select jdk1.8.0_77
 
 ### Import project from Git repository and configure project
-* Right click on ExsJavaEEFormAuthWebApp -> Build Path -> Configure Build Path...
+* Right click on BpJavaeeFormAuthApp -> Build Path -> Configure Build Path...
 * Under Libraries tab
 * Select Add Library...
 * Select Server Runtime
@@ -78,62 +80,62 @@ Caused by: java.net.BindException: Address already in use: bind
 ### Configure WildFly
 
 #### Add jdbc module
-* update {ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-jdbc-module.cli if needed
+* update {BpJavaeeFormAuthApp home}\Resources\jboss-add-jdbc-module.cli if needed
 * open command prompt
 * navigate to {wildfly_home}\bin and run the following...
 
 ```
-jboss-cli.bat --file={ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-jdbc-module.cli
+jboss-cli.bat --file={BpJavaeeFormAuthApp home}\Resources\jboss-add-jdbc-module.cli
 ```
 * creates mysql jdbc module in {wildfly_home}\modules\com\mysql\jdbc
 
 #### Create datasource
-* update {ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-datasource-module.cli if needed.  If you change the datasource name you will need to update the following:
-  * {ExsJavaEEFormAuthWebApp home}\src\com\gwn\exs\ba\data\hibernate\hibernate.cfg.xml
+* update {BpJavaeeFormAuthApp home}\Resources\jboss-add-datasource-module.cli if needed.  If you change the datasource name you will need to update the following:
+  * {BpJavaeeFormAuthApp home}\src\com\gwn\exs\ba\data\hibernate\hibernate.cfg.xml
 * open command prompt
 * navigate to {wildfly_home}\bin and run the following...
 
 ```
-jboss-cli.bat --file={ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-datasource-module.cli
+jboss-cli.bat --file={BpJavaeeFormAuthApp home}\Resources\jboss-add-datasource-module.cli
 ```
 
 * creates datasource {wildfly_home}\standalone\configuration\standalone.xml
 * also in the admin console -> Configuration -> Subsystems -> Datasources -> Non-XA - you should see MySqlBoilerplateDS
 
 #### Create security domain
-* update {ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-security-domain.cli if needed.  If you change the security-domain name you will need to update the following:
-  * {ExsJavaEEFormAuthWebApp home}\WebContent\WEB-INF\jboss-web.xml
+* update {BpJavaeeFormAuthApp home}\Resources\jboss-add-security-domain.cli if needed.  If you change the security-domain name you will need to update the following:
+  * {BpJavaeeFormAuthApp home}\WebContent\WEB-INF\jboss-web.xml
 * open command prompt
 * navigate to {wildfly_home}\bin and run the following...
 
 ```
-jboss-cli.bat --file={ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-security-domain.cli
+jboss-cli.bat --file={BpJavaeeFormAuthApp home}\Resources\jboss-add-security-domain.cli
 ```
 
 ### In Eclipses servers view
 * Right-click **WildFly 10.0 Boilerplate** -> Stop
 * Right-click **WildFly 10.0 Boilerplate** -> Add and Remove...
-* Add **ExsJavaEEFormAuthWebApp** project
+* Add **BpJavaeeFormAuthApp** project
 * Right-click **WildFly 10.0 Boilerplate** -> Publish
 * Right-click **WildFly 10.0 Boilerplate** -> Start
 
 ### Try it
-* http://127.0.0.1:8080/ExsJavaEEFormAuthWebApp
-* http://127.0.0.1:8080/ExsJavaEEFormAuthWebApp/SignUp.jsp
-* http://127.0.0.1:8080/ExsJavaEEFormAuthWebApp/secure/SecurePage.html
+* http://127.0.0.1:8080/BpJavaeeFormAuthApp
+* http://127.0.0.1:8080/BpJavaeeFormAuthApp/SignUp.jsp
+* http://127.0.0.1:8080/BpJavaeeFormAuthApp/secure/SecurePage.html
 
 ## Things to notice
-* Vendor specific security realm configuration for the Java EE server.  See ``ExsJavaEEFormAuthWebApp\WebContent\WEB-INF\jboss-web.xml``
+* Vendor specific security realm configuration for the Java EE server.  See ``BpJavaeeFormAuthApp\WebContent\WEB-INF\jboss-web.xml``
 * Notice the Hibernate filter which creates a Hibernate session transaction for each incoming request and commits the transaction if not error occurs.  This unit-of-work is know as a session-per-request.
 * If you change the location of your hibernate.cfg.xml you will need to update the HibernateUtil class
-* hibernate.cfg.xml is using the datasource created in ``ExsJavaEEFormAuthWebApp\Resources\jboss-add-datasource-module.cli``
+* hibernate.cfg.xml is using the datasource created in ``BpJavaeeFormAuthApp\Resources\jboss-add-datasource-module.cli``
 * Passwords are encrypted using Jasypt **StringPasswordEncryptor**
 
 ### The custom login module
-* class name is **com.gwn.exs.ba.jboss.auth.LoginModule** and is referenced in the security domain.  See ```ExsJavaEEFormAuthWebApp\Resources\jboss-add-security-domain.cli```
+* class name is **com.gwn.exs.ba.jboss.auth.LoginModule** and is referenced in the security domain.  See ```BpJavaeeFormAuthApp\Resources\jboss-add-security-domain.cli```
 * The security domain uses a custom login module which extends jboss class **AbstractServerLoginModule**
 * Should be placed in 1 of the following locations:
-  * ``{wildfly_home}\standalone\deployments\ExsJavaEEFormAuthWebApp.war\WEB-INF\classes``
-  * or as a jar file in ``{wildfly_home}\standalone\deployments\ExsJavaEEFormAuthWebApp.war\WEB-INF\lib``
+  * ``{wildfly_home}\standalone\deployments\BpJavaeeFormAuthApp.war\WEB-INF\classes``
+  * or as a jar file in ``{wildfly_home}\standalone\deployments\BpJavaeeFormAuthApp.war\WEB-INF\lib``
 * A custom Principal is used called **UserPrincipal**.  This custom principal includes the user id, username, and role.  The role in this custom principal corresponds to the <security-role> in the deployment descriptor.
 * Notice the method **#getRoleSets**, the role in my custom principal gets added to the caller principal group
