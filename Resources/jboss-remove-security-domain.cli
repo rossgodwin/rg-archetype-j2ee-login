@@ -1,5 +1,5 @@
 connect
  
-/subsystem=security/security-domain=MySqlSandboxSecurityDomain:remove
+/subsystem=security/security-domain=MySqlBoilerplateSecurityDomain:remove
  
 reload

@@ -15,16 +15,16 @@
 * Custom login module that extends jboss class **AbstractServerLoginModule**
 * Password digest
 * Hibernate configuration
- * **HibernateTxRequestFilter** class for session-per-request unit-of-work
- * **HibernateUtil** class for SessionFactory singleton
- * User entity and DAO classes
+  * **HibernateTxRequestFilter** class for session-per-request unit-of-work
+  * **HibernateUtil** class for SessionFactory singleton
+  * User entity and DAO classes
 * Web content includes sign up and login page
 * Example rest service
 
 ## Setup
 
 ### MySql
-* Create new database schema.  For this project call it 'sandbox'
+* Create new database schema.  For this project call it 'boilerplate'
 * Create user table
 ```
 CREATE TABLE `user` (`id` int(11) NOT NULL AUTO_INCREMENT, `username` varchar(45) NOT NULL, `password` longtext NOT NULL, `role` varchar(45) DEFAULT NULL, `email` varchar(100) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `username_UNIQUE` (`username`)) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
@@ -36,50 +36,85 @@ Download and extract WildFly to {wildfly_home}
 ### Eclipse setup server runtime
 * Go to Window -> Preferences -> Server -> Runtime Environments
 * Select Add...
-* Choose **WildFly 10.0 (Experimental)**
-* Server name: **WildFly 10.0 Sandbox**
-* Create new runtime (next page)
-* Name: **WildFly 10.0 Sandbox**
+* Choose **WildFly 10.0 Runtime**
+* Name: **WildFly 10.0 Boilerplate**
 * Home Directory: browse to {wildfly_home} location and select
-* Alternate JRE: select jdk1.8.0_77
+* Runtime JRE -> Alternate JRE: select jdk1.8.0_77
 
 ### Import project from Git repository and configure project
 * Right click on ExsJavaEEFormAuthWebApp -> Build Path -> Configure Build Path...
+* Under Libraries tab
 * Select Add Library...
 * Select Server Runtime
-* Select **WildFly 10.0 Sandbox**
+* Select **WildFly 10.0 Boilerplate**
+* Remove JRE System Library
+* Select Add Library...
+* Select JRE System Library
+* Choose Alternate JRE -> jdk1.8.0_77
 
 ### Eclipse setup server
 * Window -> Show View -> Servers
 * New -> Server
-* Choose **WildFly 10.0 (Experimental)**
-* Choose runtime server **WildFly 10.0 Sandbox**
+* Server type: **WildFly 10.0**
+* Name: **WildFly 10.0 Boilerplate**
+* Next
+* Choose runtime server **WildFly 10.0 Boilerplate**
+* Next
+* Skip adding the application to the server configuration, you will do that later
 * Start the server
+  * You may run into the following error on startup
+```
+Failed to start service jboss.serverManagement.controller.management.http: org.jboss.msc.service.StartException in service jboss.serverManagement.controller.management.http: WFLYSRV0083: Failed to start the http-interface service
+...
+Caused by: java.net.BindException: Address already in use: bind
+```
+  * I used a program called Tcpview to find the port that was being used.  In my case it was a NVIDIA process, NvNetworkService.exe.  Upon ending this process, the wildfly server started with any problems.
 * open a command prompt and navigate to {wildfly_home}\bin
 * run add-user.bat to setup a Management user
 * Access management console http://127.0.0.1:9990
 * Notice the user/password was added in {wildfly_home}\standalone\configuration\mgmt-users.properties
 
 ### Configure WildFly
-* Create datasource
- * open command prompt
- * navigate to {wildfly_home}\bin and run the following...
+
+#### Add jdbc module
+* update {ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-jdbc-module.cli if needed
+* open command prompt
+* navigate to {wildfly_home}\bin and run the following...
+
 ```
-jboss-cli.bat --file=ExsJavaEEFormAuthWebApp\Resources\jboss-add-datasource-module.cli
+jboss-cli.bat --file={ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-jdbc-module.cli
 ```
-  * creates mysql jdbc module in {wildfly_home}\modules\com\mysql\jdbc
-  * creates datasource {wildfly_home}\standalone\configuration\standalone.xml
-  * also in the admin console -> Configuration -> Start -> Subsystems -> Datasources -> Non-XA - you should see MySqlSandboxDS
-* Create security domain
- * open command prompt
- * navigate to {wildfly_home}\bin and run the following...
+* creates mysql jdbc module in {wildfly_home}\modules\com\mysql\jdbc
+
+#### Create datasource
+* update {ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-datasource-module.cli if needed.  If you change the datasource name you will need to update the following:
+  * {ExsJavaEEFormAuthWebApp home}\src\com\gwn\exs\ba\data\hibernate\hibernate.cfg.xml
+* open command prompt
+* navigate to {wildfly_home}\bin and run the following...
+
 ```
-jboss-cli.bat --file=ExsJavaEEFormAuthWebApp\Resources\jboss-add-security-domain.cli
+jboss-cli.bat --file={ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-datasource-module.cli
+```
+
+* creates datasource {wildfly_home}\standalone\configuration\standalone.xml
+* also in the admin console -> Configuration -> Subsystems -> Datasources -> Non-XA - you should see MySqlBoilerplateDS
+
+#### Create security domain
+* update {ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-security-domain.cli if needed.  If you change the security-domain name you will need to update the following:
+  * {ExsJavaEEFormAuthWebApp home}\WebContent\WEB-INF\jboss-web.xml
+* open command prompt
+* navigate to {wildfly_home}\bin and run the following...
+
+```
+jboss-cli.bat --file={ExsJavaEEFormAuthWebApp home}\Resources\jboss-add-security-domain.cli
 ```
 
 ### In Eclipses servers view
-* Right-click **WildFly 10.0 Sandbox** -> Add and Remove...
+* Right-click **WildFly 10.0 Boilerplate** -> Stop
+* Right-click **WildFly 10.0 Boilerplate** -> Add and Remove...
 * Add **ExsJavaEEFormAuthWebApp** project
+* Right-click **WildFly 10.0 Boilerplate** -> Publish
+* Right-click **WildFly 10.0 Boilerplate** -> Start
 
 ### Try it
 * http://127.0.0.1:8080/ExsJavaEEFormAuthWebApp
@@ -97,52 +132,7 @@ jboss-cli.bat --file=ExsJavaEEFormAuthWebApp\Resources\jboss-add-security-domain
 * class name is **com.gwn.exs.ba.jboss.auth.LoginModule** and is referenced in the security domain.  See ```ExsJavaEEFormAuthWebApp\Resources\jboss-add-security-domain.cli```
 * The security domain uses a custom login module which extends jboss class **AbstractServerLoginModule**
 * Should be placed in 1 of the following locations:
- * ``{wildfly_home}\standalone\deployments\ExsJavaEEFormAuthWebApp.war\WEB-INF\classes``
- * or as a jar file in ``{wildfly_home}\standalone\deployments\ExsJavaEEFormAuthWebApp.war\WEB-INF\lib``
+  * ``{wildfly_home}\standalone\deployments\ExsJavaEEFormAuthWebApp.war\WEB-INF\classes``
+  * or as a jar file in ``{wildfly_home}\standalone\deployments\ExsJavaEEFormAuthWebApp.war\WEB-INF\lib``
 * A custom Principal is used called **UserPrincipal**.  This custom principal includes the user id, username, and role.  The role in this custom principal corresponds to the <security-role> in the deployment descriptor.
 * Notice the method **#getRoleSets**, the role in my custom principal gets added to the caller principal group
-
-# Hibernate
-The following are some quotes and notes from taken from Hibernate 5.0 documentation.
-
-<!-- -->
-> A SessionFactory is an expensive-to-create, threadsafe object, intended to be shared by all application threads. It is created once, usually on application startup, from a Configuration instance.
-
-<!-- -->
-> A Session is an inexpensive, non-threadsafe object that should be used once and then discarded for: a single request, a conversation or a single unit of work. A Session will not obtain a JDBC Connection, or a Datasource, unless it is needed. It will not consume any resources until used.
-
-<!-- -->
-> Do not use the session-per-operation antipattern: do not open and close a Session for every simple database call in a single thread.
-
-<!-- -->
-> The most common pattern in a multi-user client/server application is session-per-request.
-
-<!-- -->
-> In this model, a request from the client is sent to the server, where the Hibernate persistence layer runs. A new Hibernate Session is opened, and all database operations are executed in this unit of work. On completion of the work, and once the response for the client has been prepared, the session is flushed and closed.
-
-<!-- -->
-> Starting with version 3.0.1, Hibernate added the SessionFactory.getCurrentSession() method. Initially, this assumed usage of JTA transactions, where the JTA transaction defined both the scope and context of a current session. Given the maturity of the numerous stand-alone JTA TransactionManager implementations, most, if not all, applications should be using JTA transaction management, whether or not they are deployed into a J2EE container. Based on that, the JTA-based contextual sessions are all you need to use.
-
-* Transaction
- * unit of work, if onen step fails the whole unit of work must fail (atomicity all operations are executed as an atomic unit)
- * keeps data clean and in consistant state by keeping it hidden from other transactions
- * sql statements execute inside a transaction
-
-* Programmatic transaction demarcation
- * you begin the transaction and commit or rollback
- * transaction interfaces
- * java.sql.Connection - direct usage of JDBC transactions in hibernate is discouraged b/c it binds your application to JDBC environment
- * org.hibernate.Transaction - works in nonmanaged plain JDBC environment and in an application server with JTA (Java Transaction API) as system transaction service
- * javax.transaction.UserTransaction - should be primary choice whenever you have JTA-compatible transaction service
- * javax.persistence.EntityTransaction - interface for programmatic transaction control in Java SE applications that use Java Persistence
-
-* Declarative transaction demarcation
- * you declare when you want to work inside a transaction, then the runtime environment handles this concern
- * EJB container privdes declarative transaction services in Java; called container-managed transactions (CMT)
-
-* 10.1.2 on
- * Programmatic transactions in Java SE
-  * A hibernate session is lazy, so it won't consume any resources unless they're needed.  A JDBC connection is obtained only when a transaction begins.
-  * beginTransaction() equivalent to setAutoCommit(false)
-  * NOTE: starting in Hibernate 3 all exceptions thrown are subtypes of the unchecked RuntimeException, before all exceptions thrown by Hibernate were checked
-   *All Hibernate exceptions are fatal

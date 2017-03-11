@@ -1,10 +1,10 @@
 connect
 
-/subsystem=security/security-domain=MySqlSandboxSecurityDomain:add(cache-type=default)
+/subsystem=security/security-domain=MySqlBoilerplateSecurityDomain:add(cache-type=default)
 
 reload
 
-/subsystem=security/security-domain=MySqlSandboxSecurityDomain/authentication=classic: \
+/subsystem=security/security-domain=MySqlBoilerplateSecurityDomain/authentication=classic: \
 	add( \
 		login-modules=[{ \
 			"code"=>"Remoting", \
@@ -16,7 +16,7 @@ reload
 			"code"=>"com.gwn.exs.ba.jboss.auth.LoginModule", \
 			"flag"=>"required", \
 			"module-options"=>[ \
-				("dsJndiName"=>"java:/MySqlSandboxDS") \
+				("dsJndiName"=>"java:/MySqlBoilerplateDS") \
 				]}]
 
 reload

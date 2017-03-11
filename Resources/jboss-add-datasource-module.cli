@@ -1,5 +1,5 @@
 connect
 
-data-source add --jndi-name=java:/MySqlSandboxDS --name=MySqlSandboxDS --connection-url=jdbc:mysql://127.0.0.1:3306/sandbox --driver-name=mysql.5.1.38 --user-name=root --password=asdfasdf4
+data-source add --jndi-name=java:/MySqlBoilerplateDS --name=MySqlBoilerplateDS --connection-url=jdbc:mysql://127.0.0.1:3306/boilerplate --driver-name=mysql.5.1.38 --user-name=root --password=asdfasdf4
 
 reload
