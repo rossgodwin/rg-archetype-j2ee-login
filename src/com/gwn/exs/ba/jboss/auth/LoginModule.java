@@ -29,6 +29,7 @@ import org.jboss.security.auth.spi.AbstractServerLoginModule;
 
 import com.gwn.exs.ba.biz.UserPasswordHelper;
 import com.gwn.exs.ba.common.UserPrincipal;
+import com.gwn.exs.ba.data.entity.UserTableMetadata;
 import com.gwn.exs.ba.data.hibernate.entity.User;
 import com.gwn.exs.ba.data.shared.UserRole;
 
@@ -109,7 +110,19 @@ public class LoginModule extends AbstractServerLoginModule {
 		};
 		
 		User user = null;
-		Object[] results = (Object[]) getQueryRunner().query("select id, username, password, role, email from user where username = ?", h, username);
+		
+		StringBuilder qsb = new StringBuilder();
+		qsb.append("select ")
+			.append(UserTableMetadata.COL_ID).append(", ")
+			.append(UserTableMetadata.COL_USERNAME).append(", ")
+			.append(UserTableMetadata.COL_PASSWORD).append(", ")
+			.append(UserTableMetadata.COL_ROLE).append(", ")
+			.append(UserTableMetadata.COL_EMAIL)
+			.append(" from ").append(UserTableMetadata.TABLE_NAME)
+			.append(" where ").append(UserTableMetadata.COL_USERNAME).append(" = ?");
+		
+		Object[] results = (Object[]) getQueryRunner().query(qsb.toString(), h, username);
+		
 		if (results != null) {
 			user = new User();
 			user.setId(((Number)results[0]).longValue());

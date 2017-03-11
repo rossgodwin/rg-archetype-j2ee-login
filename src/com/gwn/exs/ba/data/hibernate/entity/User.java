@@ -9,29 +9,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.gwn.exs.ba.data.entity.UserTableMetadata;
 import com.gwn.exs.ba.data.shared.ILongId;
 import com.gwn.exs.ba.data.shared.UserConstants;
 import com.gwn.exs.ba.data.shared.UserRole;
 
 @Entity
-@Table(name = "user")
+@Table(name = UserTableMetadata.TABLE_NAME)
 public class User implements ILongId {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id = -1L;
 	
-	@Column(name = "username", nullable = false, length = UserConstants.MAX_SIZE_EMAIL)
+	@Column(name = UserTableMetadata.COL_USERNAME, nullable = false, length = UserConstants.MAX_SIZE_EMAIL)
 	private String username;
 	
-	@Column(name = "password", nullable = false)
+	@Column(name = UserTableMetadata.COL_PASSWORD, nullable = false)
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "role", nullable = false)
+	@Column(name = UserTableMetadata.COL_ROLE, nullable = false)
 	private UserRole role;
 	
-	@Column(name = "email", nullable = false, length = UserConstants.MAX_SIZE_EMAIL)
+	@Column(name = UserTableMetadata.COL_EMAIL, nullable = false, length = UserConstants.MAX_SIZE_EMAIL)
 	private String email;
 
 	public Long getId() {

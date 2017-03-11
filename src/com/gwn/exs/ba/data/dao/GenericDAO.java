@@ -1,4 +1,4 @@
-package com.gwn.exs.ba.data.hibernate.dao;
+package com.gwn.exs.ba.data.dao;
 
 import com.gwn.exs.ba.data.shared.ILongId;
 
@@ -10,7 +10,7 @@ import com.gwn.exs.ba.data.shared.ILongId;
  */
 public interface GenericDAO<T, ID extends ILongId> {
 
-	T findById(ID id, boolean readOnly);
+	T findByILongId(ID id, boolean readOnly);
 	
-	T makePersistant(T entity);
+	public T findById(Long id, boolean readOnly);
 }

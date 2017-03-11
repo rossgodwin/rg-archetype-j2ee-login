@@ -2,6 +2,7 @@ package com.gwn.exs.ba.data.hibernate.dao;
 
 import org.hibernate.Session;
 
+import com.gwn.exs.ba.data.dao.GenericDAO;
 import com.gwn.exs.ba.data.hibernate.HibernateUtil;
 import com.gwn.exs.ba.data.shared.ILongId;
 
