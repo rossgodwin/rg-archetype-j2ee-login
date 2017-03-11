@@ -62,13 +62,14 @@ Download and extract WildFly to {wildfly_home}
 * Next
 * Skip adding the application to the server configuration, you will do that later
 * Start the server
-  * You may run into the following error on startup
+  * You may run into the following error on startup.  I used a program called Tcpview to find the port that was being used.  In my case it was a NVIDIA process, NvNetworkService.exe.  Upon ending this process, the wildfly server started with any problems.
+
 ```
 Failed to start service jboss.serverManagement.controller.management.http: org.jboss.msc.service.StartException in service jboss.serverManagement.controller.management.http: WFLYSRV0083: Failed to start the http-interface service
 ...
 Caused by: java.net.BindException: Address already in use: bind
 ```
-  * I used a program called Tcpview to find the port that was being used.  In my case it was a NVIDIA process, NvNetworkService.exe.  Upon ending this process, the wildfly server started with any problems.
+
 * open a command prompt and navigate to {wildfly_home}\bin
 * run add-user.bat to setup a Management user
 * Access management console http://127.0.0.1:9990
