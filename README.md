@@ -2,7 +2,7 @@
 
 # rg-archetype-j2ee-login
 
-JavaEE web application boilerplate project that has form authentication.
+J2EE project that has form authentication.
 
 ## Technologies
 * Eclipse 4.5.2 Mars
