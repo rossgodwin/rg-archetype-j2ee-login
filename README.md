@@ -46,10 +46,6 @@ Download and extract WildFly to {wildfly_home}
 
 ### Import project from Git repository and configure project
 * Right click on rg-archetype-j2ee-login -> Build Path -> Configure Build Path...
-* Under Libraries tab
-* Select Add Library...
-* Select Server Runtime
-* Select **WildFly 10.0 Boilerplate**
 * Remove JRE System Library
 * Select Add Library...
 * Select JRE System Library
