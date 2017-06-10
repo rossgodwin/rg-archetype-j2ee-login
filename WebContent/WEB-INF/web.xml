@@ -29,7 +29,7 @@
   </session-config>
   <filter>
     <filter-name>HibernateFilter</filter-name>
-    <filter-class>com.gwn.exs.ba.web.filter.HibernateTxRequestFilter</filter-class>
+    <filter-class>org.rg.archetype.web.filter.HibernateTxRequestFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>HibernateFilter</filter-name>
@@ -37,7 +37,7 @@
   </filter-mapping>
   <servlet>
     <servlet-name>SignUp</servlet-name>
-    <servlet-class>com.gwn.exs.ba.web.servlet.SignUpServlet</servlet-class>
+    <servlet-class>org.rg.archetype.web.servlet.SignUpServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SignUp</servlet-name>
@@ -45,7 +45,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>Logout</servlet-name>
-    <servlet-class>com.gwn.exs.ba.web.servlet.LogoutServlet</servlet-class>
+    <servlet-class>org.rg.archetype.web.servlet.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>

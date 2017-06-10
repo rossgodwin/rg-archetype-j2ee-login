@@ -7,13 +7,16 @@ J2EE project that has form authentication.
 ## Technologies
 * Eclipse 4.5.2 Mars
 * Jdk1.8.0_77
-* Wildfly 10
 * MySql 5.1.38
+* Wildfly 10
 * Java EE 7
 * Hibernate 5.1
 * Other 3rd party libraries (i.e. Apache commons lang)
 
 ## Highlights
+* Instructions for server configuration in Eclipse
+* Wildfly configuration instructions
+* Database data definition scripts
 * Declarative form-based authentication
 * Custom login module that extends jboss class **AbstractServerLoginModule**
 * Password digest
@@ -133,7 +136,7 @@ jboss-cli.bat --file={rg-archetype-j2ee-login home}\Resources\jboss-add-security
 * {rg-archetype-j2ee-login home}\WebContent\WEB-INF\lib\picketbox-4.9.4.Final.jar is needed for **AbstractServerLoginModule**
 
 ### The custom login module
-* class name is **com.gwn.exs.ba.jboss.auth.LoginModule** and is referenced in the security domain.  See ```rg-archetype-j2ee-login\Resources\jboss-add-security-domain.cli```
+* class name is **org.rg.archetype.jboss.auth.LoginModule** and is referenced in the security domain.  See ```rg-archetype-j2ee-login\Resources\jboss-add-security-domain.cli```
 * The security domain uses a custom login module which extends jboss class **AbstractServerLoginModule**
 * Should be placed in 1 of the following locations:
   * ``{wildfly_home}\standalone\deployments\rg-archetype-j2ee-login.war\WEB-INF\classes``

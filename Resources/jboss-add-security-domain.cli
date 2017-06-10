@@ -13,7 +13,7 @@ reload
 				("password-stacking"=>"useFirstPass") \
 				]}, \
 			{ \
-			"code"=>"com.gwn.exs.ba.jboss.auth.LoginModule", \
+			"code"=>"org.rg.archetype.jboss.auth.LoginModule", \
 			"flag"=>"required", \
 			"module-options"=>[ \
 				("dsJndiName"=>"java:/MySqlBoilerplateDS") \
