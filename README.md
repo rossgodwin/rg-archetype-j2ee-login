@@ -2,7 +2,7 @@
 
 # rg-archetype-j2ee-login
 
-J2EE project that has form authentication.
+J2EE project configured with form authentication.
 
 ## Technologies
 * Eclipse 4.5.2 Mars
@@ -91,7 +91,7 @@ jboss-cli.bat --file={rg-archetype-j2ee-login home}\Resources\jboss-add-jdbc-mod
 
 #### Create datasource
 * update {rg-archetype-j2ee-login home}\Resources\jboss-add-datasource-module.cli if needed.  If you change the datasource name you will need to update the following:
-  * {rg-archetype-j2ee-login home}\src\com\gwn\exs\ba\data\hibernate\hibernate.cfg.xml
+  * {rg-archetype-j2ee-login home}\src\org\rg\archetype\data\hibernate\hibernate.cfg.xml
 * open command prompt
 * navigate to {wildfly_home}\bin and run the following...
 
