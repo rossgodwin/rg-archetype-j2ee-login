@@ -4,6 +4,8 @@
 
 J2EE project configured with form authentication.
 
+FYI [The usage of archetype and meaning I got from maven.](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html)
+
 ## Technologies
 * Eclipse 4.5.2 Mars
 * Jdk1.8.0_77
