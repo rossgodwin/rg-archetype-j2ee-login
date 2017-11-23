@@ -66,7 +66,7 @@ Download and extract WildFly to {wildfly_home}
 * Next
 * Skip adding the application to the server configuration, you will do that later
 * Start the server
-  * You may run into the following error on startup.  I used a program called Tcpview to find the port that was being used.  In my case it was a NVIDIA process, NvNetworkService.exe.  Upon ending this process, the wildfly server started with any problems.
+  * You may run into the following error on startup.  I used a program called Tcpview to find the port that was being used.  In my case it was a NVIDIA process, NvNetworkService.exe.  This process was using port 9990 which is the port Wildfly is configured to use for management.  Upon ending this process, the wildfly server started with any problems.
 
 ```
 Failed to start service jboss.serverManagement.controller.management.http: org.jboss.msc.service.StartException in service jboss.serverManagement.controller.management.http: WFLYSRV0083: Failed to start the http-interface service
